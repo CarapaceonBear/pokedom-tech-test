@@ -38,14 +38,22 @@ const onSearchUpdated = (event) => {
             cardContainer.innerHTML += buildCard(pokemon);
         });
     }
-    let refinedArray = searchText(searchTerm, copyArray)
+    let refinedArray = searchByText(searchTerm, copyArray)
     cardContainer.innerHTML = "";
     refinedArray.forEach((pokemon) => {
         cardContainer.innerHTML += buildCard(pokemon);
     });
 }
 
-const onTypeSelected = (event) => {
+const searchByText = (search, array) => {
+    let request = search.toLowerCase();
+    let filteredArray = array.filter((item) => {
+        return item.name.includes(request);
+    })
+    return filteredArray;
+}
+
+const onTypeSelected = () => {
     if ((findTypeOne.value == "none") && (findTypeTwo.value == "none")) {
         // need to find better solution vs reloading
         cardContainer.innerHTML = "";
@@ -55,48 +63,41 @@ const onTypeSelected = (event) => {
         return;
     }
     let types = [findTypeOne.value, findTypeTwo.value];
-    let refinedArray = searchType(types, copyArray);
+    let refinedArray = searchByType(types, copyArray);
     cardContainer.innerHTML = "";
     refinedArray.forEach((pokemon) => {
         cardContainer.innerHTML += buildCard(pokemon);
     });
 }
 
-const searchText = (search, array) => {
-    let request = search.toLowerCase();
-    let filteredArray = array.filter((item) => {
-        return item.name.includes(request);
-    })
-    return filteredArray;
-}
 
-const searchType = (selections, array) => {
-    let firstFilter = []
+const searchByType = (selections, array) => {
+    let firstSet = []
     if (selections[0] != "none") {
-        firstFilter = array.filter((item) => {
+        firstSet = array.filter((item) => {
             return ((item.types[0] == selections[0]) || (item.types[1] == selections[0]))
         });
     }
-    let secondFilter = []
+    let secondSet = []
     if (selections[1] != "none") {
-        secondFilter = array.filter((item) => {
+        secondSet = array.filter((item) => {
             return ((item.types[0] === selections[1]) ||(item.types[1] === selections[1]))
         });
     }
-    if (secondFilter.length == 0) {
-        return firstFilter;
-    } 
-    if (firstFilter.length == 0) {
-        return secondFilter;
+    if (firstSet.length == 0) {
+        return secondSet;
     }
-    if (firstFilter.length > secondFilter.length) {
-        return reduceFilters(firstFilter, secondFilter) ;
+    if (secondSet.length == 0) {
+        return firstSet;
+    } 
+    if (firstSet.length > secondSet.length) {
+        return findInBoth(firstSet, secondSet) ;
     } else {
-        return reduceFilters(secondFilter, firstFilter);
+        return findInBoth(secondSet, firstSet);
     }
 }
 
-const reduceFilters = (longer, shorter) => {
+const findInBoth = (longer, shorter) => {
     let result = [];
     shorter.forEach((shortItem) => {
         let isDuplicate = false;
