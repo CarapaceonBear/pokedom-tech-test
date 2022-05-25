@@ -15,7 +15,56 @@
     <title>PokéDom</title>
   </head>
   <body>
-    <h1>PokéDom- gotta code 'em all!</h1>
+    <h1 class="title">
+      PokéDom- gotta code 'em all!
+    </h1>
+
+    <section class="filter">
+      <div class="filter__search">
+        <label for="search-box">Search Pokémon</label>
+        <input type="search" class="filter__search--box" id="search-box">
+      </div>
+      <div class="filter__list">
+        <label for="find-type-one">Choose Type 1</label>
+        <select name="type-one" class="filter__list--box" id="find-type-one">
+          <option value="none">-</option>
+          <option value="bug">Bug</option>
+          <option value="dragon">Dragon</option>
+          <option value="electric">Electric</option>
+          <option value="fighting">Fighting</option>
+          <option value="fire">Fire</option>
+          <option value="flying">Flying</option>
+          <option value="ghost">Ghost</option>
+          <option value="grass">Grass</option>
+          <option value="ground">Ground</option>
+          <option value="ice">Ice</option>
+          <option value="normal">Normal</option>
+          <option value="poison">Poison</option>
+          <option value="psychic">Psychic</option>
+          <option value="rock">Rock</option>
+          <option value="water">Water</option>
+        </select>
+        <label for="find-type-two">Choose Type 2</label>
+        <select name="type-two" class="filter__list--box" id="find-type-two">
+          <option value="none">-</option>
+          <option value="bug">Bug</option>
+          <option value="dragon">Dragon</option>
+          <option value="electric">Electric</option>
+          <option value="fighting">Fighting</option>
+          <option value="fire">Fire</option>
+          <option value="flying">Flying</option>
+          <option value="ghost">Ghost</option>
+          <option value="grass">Grass</option>
+          <option value="ground">Ground</option>
+          <option value="ice">Ice</option>
+          <option value="normal">Normal</option>
+          <option value="poison">Poison</option>
+          <option value="psychic">Psychic</option>
+          <option value="rock">Rock</option>
+          <option value="water">Water</option>
+        </select>
+      </div>
+    </section>
 
     <main class="card-container" id="card-container">
     </main>

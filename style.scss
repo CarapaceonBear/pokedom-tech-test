@@ -11,6 +11,18 @@ body {
   padding: 1rem;
 }
 
+.title {
+  text-align: center;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem;
+}
+
 .card-container {
   margin-top: 1rem;
   display: grid;
