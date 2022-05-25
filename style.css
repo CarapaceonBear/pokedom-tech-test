@@ -41,6 +41,9 @@ body {
   border-radius: 3px;
   overflow: hidden;
 }
+.card-container > .card__hidden {
+  display: none;
+}
 .card-container > .card > .card__image {
   transform: scale(1.25);
 }

@@ -38,6 +38,10 @@ body {
     border-radius: 3px;
     overflow: hidden;
 
+    &__hidden {
+      display: none;
+    }
+
     > .card__image {
       transform: scale(1.25);
     }
@@ -59,3 +63,4 @@ body {
     }
   }
 }
+

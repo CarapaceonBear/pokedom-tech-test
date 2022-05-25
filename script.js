@@ -11,77 +11,63 @@ const buildCard = (object) => {
     let pokeName = pokemon.name;
     pokeName = `${pokeName[0].toUpperCase()}${pokeName.slice(1, pokeName.length + 1)}`
     return (
-        `<div class="card">
-        <img class="card__image" src=${pokemon.sprite}>
-        <div class="card__content">
-        <h2 class="card__heading">
-        ${pokeName}
-        </h2>
-        <p class="card__text">
-        ${pokeName} (#${pokemon.id}) is a 
-        ${
-            pokemon.types.length == 1 ? pokemon.types[0] 
-            : pokemon.types[0] + " & " + pokemon.types[1]
+        `<div class="card" id="${pokemon.name}">
+            <img class="card__image" src=${pokemon.sprite}>
+            <div class="card__content">
+                <h2 class="card__heading">
+                    ${pokeName}
+                </h2>
+                <p class="card__text">
+                    ${pokeName} (#${pokemon.id}) is a 
+                    ${
+                        pokemon.types.length == 1 ? pokemon.types[0] 
+                        : pokemon.types[0] + " & " + pokemon.types[1]
                     }
                     type pokemon.
-                    </p>
-                    </div>
-                    </div>`
-                    )
+                </p>
+            </div>
+        </div>`
+    )
 }
 
 const onSearchUpdated = (event) => {
     let searchTerm = event.target.value;
     if (searchTerm === "") {
-        // need to find better solution vs reloading
-        copyArray.forEach((pokemon) => {
-            cardContainer.innerHTML += buildCard(pokemon);
-        });
+        clearSearch();
     }
-    let refinedArray = searchByText(searchTerm, copyArray)
-    cardContainer.innerHTML = "";
-    refinedArray.forEach((pokemon) => {
-        cardContainer.innerHTML += buildCard(pokemon);
-    });
+    let refinedArray = searchByText(searchTerm, copyArray);
+    displaySearch(refinedArray, copyArray);
 }
 
 const searchByText = (search, array) => {
     let request = search.toLowerCase();
     let filteredArray = array.filter((item) => {
         return item.name.includes(request);
-    })
+    });
     return filteredArray;
 }
 
 const onTypeSelected = () => {
     if ((findTypeOne.value == "none") && (findTypeTwo.value == "none")) {
-        // need to find better solution vs reloading
-        cardContainer.innerHTML = "";
-        copyArray.forEach((pokemon) => {
-            cardContainer.innerHTML += buildCard(pokemon);
-        });
+        clearSearch();
         return;
     }
     let types = [findTypeOne.value, findTypeTwo.value];
     let refinedArray = searchByType(types, copyArray);
-    cardContainer.innerHTML = "";
-    refinedArray.forEach((pokemon) => {
-        cardContainer.innerHTML += buildCard(pokemon);
-    });
+    displaySearch(refinedArray, copyArray);
 }
 
-
 const searchByType = (selections, array) => {
-    let firstSet = []
+    let firstSet = [];
     if (selections[0] != "none") {
         firstSet = array.filter((item) => {
-            return ((item.types[0] == selections[0]) || (item.types[1] == selections[0]))
+            return ((item.types[0] == selections[0]) || (item.types[1] == selections[0]));
         });
     }
-    let secondSet = []
+    let secondSet = [];
     if (selections[1] != "none") {
         secondSet = array.filter((item) => {
-            return ((item.types[0] === selections[1]) ||(item.types[1] === selections[1]))
+            return ((item.types[0] === selections[1]) ||(item.types[1] === selections[1]));
         });
     }
     if (firstSet.length == 0) {
@@ -103,10 +89,29 @@ const findInBoth = (longer, shorter) => {
         let isDuplicate = false;
         longer.forEach((longItem) => {
             shortItem == longItem ? isDuplicate = true : null;
-        })
+        });
         isDuplicate ? result.push(shortItem) : null;
-    })
+    });
     return result;
+}
+
+const displaySearch = (searchResults, fullArray) => {
+    fullArray.forEach((pokemon) => {
+        let isHidden = true;
+        let card = document.getElementById(pokemon.name);
+        searchResults.forEach((result) => {
+            if (card.id == result.name) {
+                isHidden = false;
+            }
+        });
+        isHidden ? card.classList.add("card__hidden") : card.classList.remove("card__hidden");
+    });
+}
+const clearSearch = () => {
+    copyArray.forEach((pokemon) => {
+        let card = document.getElementById(pokemon.name);
+        card.classList.remove("card__hidden")
+    });
 }
 
 // on start
