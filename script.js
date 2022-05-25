@@ -6,10 +6,6 @@ if (pokemonArray != null) {
     console.log("Array imported");
 }
 
-pokemonArray.forEach((pokemon) => {
-    // console.log(pokemon.name);
-})
-
 const buildCard = (object) => {
     let pokemon = object;
     let pokeName = pokemon.name;
@@ -34,6 +30,7 @@ const buildCard = (object) => {
     )
 }
 
-cardContainer.innerHTML += buildCard(pokemonArray[0]);
-cardContainer.innerHTML += buildCard(pokemonArray[3]);
-cardContainer.innerHTML += buildCard(pokemonArray[6]);
+pokemonArray.forEach((pokemon) => {
+    cardContainer.innerHTML += buildCard(pokemon);
+})
+
